@@ -9,6 +9,7 @@ def home():
 			if 'name' in request.form and 'img' in request.files:
 				f = request.files['img']
 				f.save(os.path.join(app.config['UPLOADS_FOLDER'],request.form['name']+'.jpg'))
+				return "ok!"
 	return redirect(app.config['FRONTEND_URL'])
 
 @app.route('/delete', methods=['POST'])
@@ -17,6 +18,6 @@ def delete():
 		if 'name' in request.form:
 			os.remove(os.path.join(app.config['UPLOADS_FOLDER'],request.form['name']+'.jpg'))
 
-@app.route('/img/<img_id>')
+@app.route('/<img_id>')
 def view_image(img_id):
 	return send_from_directory(app.config['UPLOADS_FOLDER'], img_id+'.jpg')
